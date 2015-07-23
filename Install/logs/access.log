@@ -1,0 +1,7 @@
+127.0.0.1 - - [22/Jul/2015:13:08:57 +0800] "GET / HTTP/1.1" 404 570 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+127.0.0.1 - - [22/Jul/2015:13:08:57 +0800] "GET /favicon.ico HTTP/1.1" 404 570 "http://127.0.0.1/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+127.0.0.1 - - [22/Jul/2015:13:10:31 +0800] "GET / HTTP/1.1" 404 570 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+127.0.0.1 - - [22/Jul/2015:13:10:35 +0800] "GET / HTTP/1.1" 404 570 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+127.0.0.1 - - [22/Jul/2015:13:10:43 +0800] "GET / HTTP/1.1" 404 570 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+127.0.0.1 - - [22/Jul/2015:13:11:35 +0800] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+127.0.0.1 - - [22/Jul/2015:16:24:08 +0800] "GET /favicon.ico HTTP/1.1" 404 570 "http://127.0.0.1/" "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
