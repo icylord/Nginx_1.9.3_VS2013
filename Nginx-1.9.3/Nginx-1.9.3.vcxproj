@@ -264,6 +264,9 @@
     <ClCompile Include="src\os\win32\ngx_wsasend.c" />
     <ClCompile Include="src\os\win32\ngx_wsasend_chain.c" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Install\conf\nginx.conf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

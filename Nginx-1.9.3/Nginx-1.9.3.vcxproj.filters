@@ -58,6 +58,9 @@
     <Filter Include="Source Files\src%255cos%255cwin32">
       <UniqueIdentifier>{b3e51c7a-ece2-4764-971c-8192e3ccb2af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="conf">
+      <UniqueIdentifier>{cb760fb1-1c97-40e1-b131-6123768568ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="objs\ngx_auto_config.h">
@@ -632,5 +635,10 @@
     <ClCompile Include="src\core\ngx_times.c">
       <Filter>Source Files\src%255ccore</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Install\conf\nginx.conf">
+      <Filter>conf</Filter>
+    </None>
   </ItemGroup>
 </Project>
