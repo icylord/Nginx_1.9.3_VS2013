@@ -1,6 +1,6 @@
 
 CC =	cl
-CFLAGS =  -O2  -W4 -WX -nologo -MT -Zi -DFD_SETSIZE=1024
+CFLAGS =  -O2  -W4 -WX -nologo -MT -Zi -DFD_SETSIZE=1024 -DNO_SYS_TYPES_H
 CPP =	
 LINK =	$(CC)
 
@@ -9,6 +9,9 @@ ALL_INCS = -I src/core \
 	-I src/event \
 	-I src/event/modules \
 	-I src/os/win32 \
+	-I objs/lib/pcre-8.37 \
+	-I objs/lib/openssl-1.0.2d/openssl/include \
+	-I objs/lib/zlib-1.2.8 \
 	-I objs \
 	-I src/http \
 	-I src/http/modules \
@@ -68,6 +71,10 @@ CORE_DEPS = src/core/nginx.h \
 	src/os/win32/ngx_os.h \
 	src/os/win32/ngx_user.h \
 	src/os/win32/ngx_process_cycle.h \
+	src/event/ngx_event_openssl.h \
+	src/core/ngx_regex.h \
+	objs/lib/pcre-8.37/pcre.h \
+	objs/lib/openssl-1.0.2d/openssl/include/openssl/ssl.h \
 	objs/ngx_auto_config.h \
 	objs/ngx_config.pch
 
@@ -76,6 +83,9 @@ CORE_INCS = -I src/core \
 	-I src/event \
 	-I src/event/modules \
 	-I src/os/win32 \
+	-I objs/lib/pcre-8.37 \
+	-I objs/lib/openssl-1.0.2d/openssl/include \
+	-I objs/lib/zlib-1.2.8 \
 	-I objs
 
 
@@ -88,7 +98,8 @@ HTTP_DEPS = src/http/ngx_http.h \
 	src/http/ngx_http_script.h \
 	src/http/ngx_http_upstream.h \
 	src/http/ngx_http_upstream_round_robin.h \
-	src/http/modules/ngx_http_ssi_filter_module.h
+	src/http/modules/ngx_http_ssi_filter_module.h \
+	src/http/modules/ngx_http_ssl_module.h
 
 
 HTTP_INCS = -I src/http \
@@ -154,6 +165,9 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/event/ngx_event_acceptex.obj \
 	objs/src/event/modules/ngx_iocp_module.obj \
 	objs/src/event/modules/ngx_win32_select_module.obj \
+	objs/src/event/ngx_event_openssl.obj \
+	objs/src/event/ngx_event_openssl_stapling.obj \
+	objs/src/core/ngx_regex.obj \
 	objs/src/http/ngx_http.obj \
 	objs/src/http/ngx_http_core_module.obj \
 	objs/src/http/ngx_http_special_response.obj \
@@ -175,6 +189,7 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/http/modules/ngx_http_headers_filter_module.obj \
 	objs/src/http/modules/ngx_http_not_modified_filter_module.obj \
 	objs/src/http/ngx_http_file_cache.obj \
+	objs/src/http/modules/ngx_http_gzip_filter_module.obj \
 	objs/src/http/ngx_http_postpone_filter_module.obj \
 	objs/src/http/modules/ngx_http_ssi_filter_module.obj \
 	objs/src/http/modules/ngx_http_charset_filter_module.obj \
@@ -188,6 +203,8 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/http/modules/ngx_http_map_module.obj \
 	objs/src/http/modules/ngx_http_split_clients_module.obj \
 	objs/src/http/modules/ngx_http_referer_module.obj \
+	objs/src/http/modules/ngx_http_rewrite_module.obj \
+	objs/src/http/modules/ngx_http_ssl_module.obj \
 	objs/src/http/modules/ngx_http_proxy_module.obj \
 	objs/src/http/modules/ngx_http_fastcgi_module.obj \
 	objs/src/http/modules/ngx_http_uwsgi_module.obj \
@@ -201,7 +218,9 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/http/modules/ngx_http_upstream_keepalive_module.obj \
 	objs/src/http/modules/ngx_http_upstream_zone_module.obj \
 	objs/ngx_modules.obj \
-	objs/nginx.res
+	objs/nginx.res \
+	objs/lib/pcre-8.37/pcre.lib \
+	objs/lib/zlib-1.2.8/zlib.lib
 	$(LINK) @<<
 	-Feobjs/nginx
 	objs/src/core/nginx.obj 
@@ -263,6 +282,9 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/event/ngx_event_acceptex.obj 
 	objs/src/event/modules/ngx_iocp_module.obj 
 	objs/src/event/modules/ngx_win32_select_module.obj 
+	objs/src/event/ngx_event_openssl.obj 
+	objs/src/event/ngx_event_openssl_stapling.obj 
+	objs/src/core/ngx_regex.obj 
 	objs/src/http/ngx_http.obj 
 	objs/src/http/ngx_http_core_module.obj 
 	objs/src/http/ngx_http_special_response.obj 
@@ -284,6 +306,7 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/http/modules/ngx_http_headers_filter_module.obj 
 	objs/src/http/modules/ngx_http_not_modified_filter_module.obj 
 	objs/src/http/ngx_http_file_cache.obj 
+	objs/src/http/modules/ngx_http_gzip_filter_module.obj 
 	objs/src/http/ngx_http_postpone_filter_module.obj 
 	objs/src/http/modules/ngx_http_ssi_filter_module.obj 
 	objs/src/http/modules/ngx_http_charset_filter_module.obj 
@@ -297,6 +320,8 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/http/modules/ngx_http_map_module.obj 
 	objs/src/http/modules/ngx_http_split_clients_module.obj 
 	objs/src/http/modules/ngx_http_referer_module.obj 
+	objs/src/http/modules/ngx_http_rewrite_module.obj 
+	objs/src/http/modules/ngx_http_ssl_module.obj 
 	objs/src/http/modules/ngx_http_proxy_module.obj 
 	objs/src/http/modules/ngx_http_fastcgi_module.obj 
 	objs/src/http/modules/ngx_http_uwsgi_module.obj 
@@ -310,7 +335,7 @@ objs/nginx.exe:	objs/src/core/nginx.obj \
 	objs/src/http/modules/ngx_http_upstream_keepalive_module.obj 
 	objs/src/http/modules/ngx_http_upstream_zone_module.obj 
 	objs/ngx_modules.obj 
-	kernel32.lib user32.lib advapi32.lib ws2_32.lib 
+	kernel32.lib user32.lib advapi32.lib ws2_32.lib objs/lib/pcre-8.37/pcre.lib objs/lib/openssl-1.0.2d/openssl/lib/ssleay32.lib objs/lib/openssl-1.0.2d/openssl/lib/libeay32.lib gdi32.lib crypt32.lib objs/lib/zlib-1.2.8/zlib.lib 
 	objs/nginx.res -link -verbose:lib -debug objs/ngx_pch.obj
 	
 <<
@@ -735,6 +760,27 @@ objs/src/event/modules/ngx_win32_select_module.obj:	$(CORE_DEPS) \
 		src/event/modules/ngx_win32_select_module.c
 
 
+objs/src/event/ngx_event_openssl.obj:	$(CORE_DEPS) \
+	src/event/ngx_event_openssl.c
+	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
+		-Foobjs/src/event/ngx_event_openssl.obj \
+		src/event/ngx_event_openssl.c
+
+
+objs/src/event/ngx_event_openssl_stapling.obj:	$(CORE_DEPS) \
+	src/event/ngx_event_openssl_stapling.c
+	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
+		-Foobjs/src/event/ngx_event_openssl_stapling.obj \
+		src/event/ngx_event_openssl_stapling.c
+
+
+objs/src/core/ngx_regex.obj:	$(CORE_DEPS) \
+	src/core/ngx_regex.c
+	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
+		-Foobjs/src/core/ngx_regex.obj \
+		src/core/ngx_regex.c
+
+
 objs/src/http/ngx_http.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
 	src/http/ngx_http.c
 	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
@@ -882,6 +928,13 @@ objs/src/http/ngx_http_file_cache.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
 		src/http/ngx_http_file_cache.c
 
 
+objs/src/http/modules/ngx_http_gzip_filter_module.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
+	src/http/modules/ngx_http_gzip_filter_module.c
+	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
+		-Foobjs/src/http/modules/ngx_http_gzip_filter_module.obj \
+		src/http/modules/ngx_http_gzip_filter_module.c
+
+
 objs/src/http/ngx_http_postpone_filter_module.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
 	src/http/ngx_http_postpone_filter_module.c
 	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
@@ -971,6 +1024,20 @@ objs/src/http/modules/ngx_http_referer_module.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
 	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
 		-Foobjs/src/http/modules/ngx_http_referer_module.obj \
 		src/http/modules/ngx_http_referer_module.c
+
+
+objs/src/http/modules/ngx_http_rewrite_module.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
+	src/http/modules/ngx_http_rewrite_module.c
+	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
+		-Foobjs/src/http/modules/ngx_http_rewrite_module.obj \
+		src/http/modules/ngx_http_rewrite_module.c
+
+
+objs/src/http/modules/ngx_http_ssl_module.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
+	src/http/modules/ngx_http_ssl_module.c
+	$(CC) -c $(CFLAGS) -Yungx_config.h -Fpobjs/ngx_config.pch $(ALL_INCS) \
+		-Foobjs/src/http/modules/ngx_http_ssl_module.obj \
+		src/http/modules/ngx_http_ssl_module.c
 
 
 objs/src/http/modules/ngx_http_proxy_module.obj:	$(CORE_DEPS) $(HTTP_DEPS) \
@@ -1063,6 +1130,21 @@ objs/nginx.res:	 src/os/win32/nginx.ico
 
 objs/ngx_config.pch:	src/core/ngx_config.h src/os/win32/ngx_win32_config.h objs/ngx_auto_config.h
 	$(CC) $(CFLAGS) -Ycngx_config.h -Fpobjs/ngx_config.pch -c $(ALL_INCS) -Foobjs/ngx_pch.obj objs/ngx_pch.c
+
+
+objs/lib/pcre-8.37/pcre.lib:	objs/lib/pcre-8.37/pcre.h objs/Makefile
+	$(MAKE) -f auto/lib/pcre/makefile.msvc PCRE="objs/lib/pcre-8.37" CPU_OPT="" LIBC=-MT
+
+objs/lib/pcre-8.37/pcre.h:
+	$(MAKE) -f auto/lib/pcre/makefile.msvc PCRE="objs/lib/pcre-8.37" pcre.h
+
+
+objs/lib/openssl-1.0.2d/openssl/include/openssl/ssl.h:	objs/Makefile
+	$(MAKE) -f auto/lib/openssl/makefile.msvc					OPENSSL="objs/lib/openssl-1.0.2d" OPENSSL_OPT=""
+
+
+objs/lib/zlib-1.2.8/zlib.lib:	objs/Makefile
+	$(MAKE) -f auto/lib/zlib/makefile.msvc CPU_OPT="" LIBC=-MT ZLIB="objs/lib/zlib-1.2.8"
 
 
 manpage:	objs/nginx.8
